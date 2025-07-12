@@ -58,3 +58,5 @@ const taskSchema = new Schema(
         }
     }
 )
+
+export default model("Task", taskSchema)
