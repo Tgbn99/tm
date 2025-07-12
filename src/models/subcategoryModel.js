@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const SubcategorySchema = new Schema(
+const subcategorySchema = new Schema(
     {
         subcategoryID: {
             type: String,
@@ -24,4 +24,4 @@ const SubcategorySchema = new Schema(
     }
 )
 
-export default model("Subcategory", SubcategorySchema)
+export default model("Subcategory", subcategorySchema)
