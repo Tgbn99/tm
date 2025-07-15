@@ -53,10 +53,32 @@ class TaskInputDTO {
     if (!taskProject) {
       throw new Error("ProjectNotFound");
     }
-    const taskTags = await Promise.all(
-      this.tags.map(async (tag) => await Tag.findOne({ tagID: tag }))
+
+    /* const missingTags = [];
+    for (let i = 0; i < this.tags.length; i++) {
+      const tagExists = await Tag.findOne({ tagID: this.tags[i] });
+      if (!tagExists) {
+        missingTags.add(this.tags[i]);
+      }
+    }
+    if (missingTags.length > 0) {
+      missingTags.forEach((tagID) => logger.error(tagID));
+      throw new Error("TagNotFound");
+    } */
+
+    const tagLookups = await Promise.all(
+      this.tags.map(async (tagID) => {
+        const tagDoc = await Tag.findOne({ tagID: tagID });
+        return { tagID, tagDoc };
+      })
     );
-    if (taskTags.length !== this.tags.length || taskTags.includes(null)) {
+
+    const missingTags = tagLookups
+      .filter(({ tagDoc }) => !tagDoc)
+      .map(({ tagID }) => tagID);
+
+    if(missingTags.length > 0) {
+      missingTags.forEach(tagID => loggers.error(`Missing tag: ${tagID}`))
       throw new Error("TagNotFound");
     }
 
@@ -72,7 +94,7 @@ class TaskInputDTO {
       completedAt: this.completedAt,
       assignee: taskUser._id,
       project: taskProject._id,
-      tags: taskTags.map((tag) => tag._id),
+      tags: tagLookups.map(({ tagID }) => tagID),
     });
   }
 }
