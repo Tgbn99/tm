@@ -4,8 +4,10 @@ import Subcategory from "../models/subcategoryModel.js";
 import Project from "../models/projectModel.js";
 import Tag from "../models/tagModel.js";
 import User from "../models/userModel.js";
+import logger from "../logger.js"
 
 class TaskInputDTO {
+  
   constructor(
     taskID,
     title,
@@ -20,6 +22,8 @@ class TaskInputDTO {
     project,
     tags
   ) {
+
+    
     this.taskID = taskID;
     this.title = title;
     this.description = description;
@@ -78,7 +82,7 @@ class TaskInputDTO {
       .map(({ tagID }) => tagID);
 
     if(missingTags.length > 0) {
-      missingTags.forEach(tagID => loggers.error(`Missing tag: ${tagID}`))
+      missingTags.forEach(tagID => logger.error(`Missing tag: ${tagID}`))
       throw new Error("TagNotFound");
     }
 
