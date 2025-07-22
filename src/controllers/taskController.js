@@ -60,7 +60,7 @@ class LiftController {
     try {
       const inputDTO = new TaskInputDTO(req.body);
       const taskModel = await inputDTO.toTask();
-      const updatedTask = TaskService.update(taskModel);
+      const updatedTask = TaskService.update(taskModel, req.params.taskID);
       const outputDTO = new TaskOutputDTO(updatedTask);
 
       res.status(200).json({
