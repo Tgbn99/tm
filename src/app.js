@@ -1,27 +1,33 @@
-import express from "express"
-import logger from "../logger.js"
-import mongoose from "mongoose"
-import {} from "dotenv/config"
+import express from "express";
+import logger from "./logger.js";
+import mongoose from "mongoose";
+import {} from "dotenv/config";
+import { taskRoutes } from "./routes/taskRoutes.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const mongoConnectionString = process.env.DB_CONNECTION_STRING || "mongodb://mongo:27017/tm"
+const mongoConnectionString =
+  process.env.DB_CONNECTION_STRING || "mongodb://mongo:27017/tm";
 
 // Middleware to parse JSON
 app.use(express.json());
 
 // Basic route
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
 });
+
+app.use("/api/tasks", taskRoutes);
+app.use(errorHandler);
 
 mongoose
   .connect(mongoConnectionString)
   .then(() => logger.info("Connected to MongoDB"))
-  .catch((error) => logger.error("Could not connect to MongoDB:", error))
+  .catch((error) => logger.error("Could not connect to MongoDB:", error));
 
 const server = app.listen(port, () => {
   logger.info(`Server is running on http://localhost:${port}`);
 });
 
-export { app, server }
+export { app, server };

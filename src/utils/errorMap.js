@@ -1,4 +1,4 @@
-import { MESSAGES } from "./messages";
+import { MESSAGES } from "./messages.js";
 
 export const ERROR_MAP = {
     CategoryNotFound: {

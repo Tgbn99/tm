@@ -4,7 +4,7 @@ import TaskOutputDTO from "../DTOs/taskOutputDTO.js";
 import logger from "../logger.js";
 import { MESSAGES } from "../utils/messages.js";
 
-class LiftController {
+class TaskController {
   async createTask(req, res) {
     logger.info("POST: /api/tasks");
     try {
@@ -89,4 +89,4 @@ class LiftController {
   }
 }
 
-export default new LiftController();
+export default new TaskController();
