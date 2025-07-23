@@ -12,6 +12,8 @@ class TaskOutputDTO {
     this.assignee = task.assignee;
     this.project = task.project;
     this.tags = task.tags;
+    this.createdAt = task.createdAt;
+    this.updatedAt = task.updatedAt;
   }
 }
 

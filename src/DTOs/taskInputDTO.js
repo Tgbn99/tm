@@ -4,38 +4,22 @@ import Subcategory from "../models/subcategoryModel.js";
 import Project from "../models/projectModel.js";
 import Tag from "../models/tagModel.js";
 import User from "../models/userModel.js";
-import logger from "../logger.js"
+import logger from "../logger.js";
 
 class TaskInputDTO {
-  
-  constructor(
-    taskID,
-    title,
-    description,
-    category,
-    subcategory,
-    dueDate,
-    status,
-    priority,
-    completedAt,
-    assignee,
-    project,
-    tags
-  ) {
-
-    
-    this.taskID = taskID;
-    this.title = title;
-    this.description = description;
-    this.category = category;
-    this.subcategory = subcategory;
-    this.dueDate = dueDate;
-    this.status = status;
-    this.priority = priority;
-    this.completedAt = completedAt;
-    this.assignee = assignee;
-    this.project = project;
-    this.tags = tags;
+  constructor(task) {
+    this.taskID = task.taskID;
+    this.title = task.title;
+    this.description = task.description;
+    this.category = task.category;
+    this.subcategory = task.subcategory;
+    this.dueDate = task.dueDate;
+    this.status = task.status;
+    this.priority = task.priority;
+    this.completedAt = task.completedAt;
+    this.assignee = task.assignee;
+    this.project = task.project;
+    this.tags = task.tags;
   }
 
   async toTask() {
@@ -81,8 +65,8 @@ class TaskInputDTO {
       .filter(({ tagDoc }) => !tagDoc)
       .map(({ tagID }) => tagID);
 
-    if(missingTags.length > 0) {
-      missingTags.forEach(tagID => logger.error(`Missing tag: ${tagID}`))
+    if (missingTags.length > 0) {
+      missingTags.forEach((tagID) => logger.error(`Missing tag: ${tagID}`));
       throw new Error("TagNotFound");
     }
 
