@@ -83,7 +83,7 @@ class TaskInputDTO {
       completedAt: this.completedAt,
       assignee: taskUser._id,
       project: taskProject._id,
-      tags: tagLookups.map(({ tagID }) => tagID),
+      tags: tagLookups.map(({ tagDoc }) => tagDoc._id),
     });
   }
 }
