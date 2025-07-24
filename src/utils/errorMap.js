@@ -5,6 +5,10 @@ export const ERROR_MAP = {
         statusCode: 400,
         clientMessage: MESSAGES.CATEGORY_NOT_FOUND,
     },
+    NoCategoryFound: {
+        statusCode: 404,
+        clientMessage: MESSAGES.NO_CATEGORY_FOUND,
+    },
     SubcategoryNotFound: {
         statusCode: 400,
         clientMessage: MESSAGES.SUBCATEGORY_NOT_FOUND,
@@ -20,5 +24,13 @@ export const ERROR_MAP = {
     UserNotFound: {
         statusCode: 400,
         clientMessage: MESSAGES.USER_NOT_FOUND,
+    },
+    TaskNotFound: {
+        statusCode: 400,
+        clientMessage: MESSAGES.TASK_NOT_FOUND,
+    },
+    NoTaskFound: {
+        statusCode: 404,
+        clientMessage: MESSAGES.NO_TASK_FOUND,
     }
 }

@@ -23,6 +23,7 @@ class TaskInputDTO {
   }
 
   async toTask() {
+    logger.info("toTask")
     const taskCategory = await Category.findOne({ categoryID: this.category });
     if (!taskCategory) {
       throw new Error("CategoryNotFound");

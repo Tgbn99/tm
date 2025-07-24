@@ -16,14 +16,23 @@ const categorySchema = new Schema(
       type: String,
       maxlength: 100,
     },
-    subcategories: [
+    /* subcategories: [
       {
         type: Schema.Types.ObjectId,
         ref: "Subcategory",
       },
-    ],
+    ], */
   },
   { collection: "categories", timestamps: true }
 );
+
+categorySchema.virtual("subcategories", {
+  ref: "Subcategory",
+  localField: "_id",
+  foreignField: "category",
+});
+
+categorySchema.set("toObject", { virtuals: true });
+categorySchema.set("toJSON", { virtuals: true });
 
 export default model("Category", categorySchema);

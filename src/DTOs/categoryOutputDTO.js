@@ -8,3 +8,5 @@ class CategoryOutputDTO {
     this.updatedAt = category.updatedAt;
   }
 }
+
+export default CategoryOutputDTO;
