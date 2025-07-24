@@ -6,11 +6,11 @@ import { MESSAGES } from "../utils/messages.js";
 
 class TaskController {
   async createTask(req, res) {
-    logger.info("POST: /api/tasks");
+    logger.info("TaskController - createTask");
     try {
       const inputDTO = new TaskInputDTO(req.body);
       const taskModel = await inputDTO.toTask();
-      const savedTask = TaskService.create(taskModel);
+      const savedTask = await TaskService.create(taskModel);
       const outputDTO = new TaskOutputDTO(savedTask);
 
       res.status(201).json({
@@ -24,7 +24,7 @@ class TaskController {
   }
 
   async getAllTasks(req, res) {
-    logger.info("GET: /api/tasks");
+    logger.info("TaskController - getAllTasks");
     try {
       const tasks = await TaskService.list();
       const outputDTOs = tasks.map((task) => new TaskOutputDTO(task));
@@ -40,7 +40,7 @@ class TaskController {
   }
 
   async getTask(req, res) {
-    logger.info("GET: /api/tasks/taskID/");
+    logger.info("TaskController - getTask");
     try {
       const task = await TaskService.list(req.params.taskID);
       const outputDTO = new TaskOutputDTO(task);
@@ -56,11 +56,11 @@ class TaskController {
   }
 
   async updateTask(req, res) {
-    logger.info("PUT: /api/tasks");
+    logger.info("TaskController - updateTask");
     try {
       const inputDTO = new TaskInputDTO(req.body);
       const taskModel = await inputDTO.toTask();
-      const updatedTask = TaskService.update(taskModel, req.params.taskID);
+      const updatedTask = await TaskService.update(taskModel, req.params.taskID);
       const outputDTO = new TaskOutputDTO(updatedTask);
 
       res.status(200).json({
@@ -74,7 +74,7 @@ class TaskController {
   }
 
   async deleteTask(req, res) {
-    logger.info("DELETE: /api/tasks");
+    logger.info("TaskController - deleteTask");
     try {
       await TaskService.delete(req.params.taskID)
 

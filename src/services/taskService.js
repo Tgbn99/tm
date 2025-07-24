@@ -4,23 +4,41 @@ import Task from "../models/taskModel.js";
 class TaskService {
   async create(task) {
     logger.info("TaskService - create");
-    await task.save();
-    await task.populate([
-      { path: "category" },
-      { path: "subcategory" },
-      { path: "project" },
-      { path: "user" },
-      { path: "tags" },
-    ]);
-    return task;
+    return await task
+      .save()
+      .populate([
+        { path: "category" },
+        { path: "subcategory" },
+        { path: "project" },
+        { path: "user" },
+        { path: "tags" },
+      ]);
   }
 
   async list(taskID) {
+    logger.info("TaskService - list");
     if (!taskID) {
-      const tasks = await Task.find();
+      logger.info("TaskService - listAll");
+      const tasks = await Task.find().populate([
+        { path: "category" },
+        { path: "subcategory" },
+        { path: "project" },
+        { path: "user" },
+        { path: "tags" },
+      ]);
+      if (tasks.length === 0) {
+        throw new Error("NoTaskFound");
+      }
       return tasks;
     } else {
-      const task = await Task.findOne({ taskID: taskID });
+      logger.info("TaskService - listOne");
+      const task = await Task.findOne({ taskID: taskID }).populate([
+        { path: "category" },
+        { path: "subcategory" },
+        { path: "project" },
+        { path: "user" },
+        { path: "tags" },
+      ]);
       if (!task) {
         throw new Error("TaskNotFound");
       } else {
@@ -30,22 +48,31 @@ class TaskService {
   }
 
   async update(data, taskID) {
+    logger.info("TaskService - update");
     const task = await Task.findOne({ taskID: taskID });
     if (!task) {
       throw new Error("TaskNotFound");
     }
     Object.assign(task, data);
-    await task.save();
-    return task;
+    return await task
+      .save()
+      .populate([
+        { path: "category" },
+        { path: "subcategory" },
+        { path: "project" },
+        { path: "user" },
+        { path: "tags" },
+      ]);
   }
 
   async delete(taskID) {
+    logger.info("TaskService - delete");
     const task = await Task.findOne({ taskID: taskID });
     if (!task) {
       throw new Error("TaskNotFound");
     }
-    await task.deleteOne()
+    await task.deleteOne();
   }
 }
 
-export default new TaskService()
+export default new TaskService();

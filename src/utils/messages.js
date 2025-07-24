@@ -1,13 +1,22 @@
 export const MESSAGES = {
     CATEGORY_NOT_FOUND: "Category was not found with given code",
+    NO_CATEGORY_FOUND: "No categories exist",
     SUBCATEGORY_NOT_FOUND: "Subcategory was not found with given code",
     PROJECT_NOT_FOUND: "Project was not found with given code",
     TAGS_NOT_FOUND: "Tag was not found with given code",
     USER_NOT_FOUND: "User was not found with given code",
+    TASK_NOT_FOUND: "Task was not found with given code",
+    NO_TASK_FOUND: "No tasks exist",
 
     TASK_CREATED: "Task was created with success",
     TASKS_RETRIEVED: "Tasks were retrieved with success",
     TASK_RETRIEVED: "Task was retrieved with success",
     TASK_UPDATED: "Task was updated with success",
     TASK_DELETED: "Task was deleted with success",
+
+    CATEGORY_CREATED: "Category was created with success",
+    CATEGORIES_RETRIEVED: "Categories were retrieved with success",
+    CATEGORY_RETRIEVED: "Category was retrieved with success",
+    CATEGORY_UPDATED: "Category was updated with success",
+    CATEGORY_DELETED: "Category was deleted with success",
 }
