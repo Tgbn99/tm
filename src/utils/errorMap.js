@@ -13,6 +13,10 @@ export const ERROR_MAP = {
         statusCode: 400,
         clientMessage: MESSAGES.SUBCATEGORY_NOT_FOUND,
     },
+    NoSubcategoryFound: {
+        statusCode: 404,
+        clientMessage: MESSAGES.NO_SUBCATEGORY_FOUND,
+    },
     ProjectNotFound: {
         statusCode: 400,
         clientMessage: MESSAGES.PROJECT_NOT_FOUND,

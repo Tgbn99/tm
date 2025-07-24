@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import {} from "dotenv/config";
 import { taskRoutes } from "./routes/taskRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import { categoryRoutes } from "./routes/categoryRoutes.js";
+import { subcategoryRoutes } from "./routes/subcategoryRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +21,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/tasks", taskRoutes);
+app.use("/api/tasks", categoryRoutes);
+app.use("/api/tasks", subcategoryRoutes);
 app.use(errorHandler);
 
 mongoose

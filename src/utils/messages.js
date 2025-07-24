@@ -2,6 +2,7 @@ export const MESSAGES = {
     CATEGORY_NOT_FOUND: "Category was not found with given code",
     NO_CATEGORY_FOUND: "No categories exist",
     SUBCATEGORY_NOT_FOUND: "Subcategory was not found with given code",
+    NO_SUBCATEGORY_FOUND: "No subcategories exist",
     PROJECT_NOT_FOUND: "Project was not found with given code",
     TAGS_NOT_FOUND: "Tag was not found with given code",
     USER_NOT_FOUND: "User was not found with given code",
@@ -19,4 +20,10 @@ export const MESSAGES = {
     CATEGORY_RETRIEVED: "Category was retrieved with success",
     CATEGORY_UPDATED: "Category was updated with success",
     CATEGORY_DELETED: "Category was deleted with success",
+
+    SUBCATEGORY_CREATED: "Subcategory was created with success",
+    SUBCATEGORIES_RETRIEVED: "Subcategories were retrieved with success",
+    SUBCATEGORY_RETRIEVED: "Subcategory was retrieved with success",
+    SUBCATEGORY_UPDATED: "Subcategory was updated with success",
+    SUBCATEGORY_DELETED: "Subcategory was deleted with success",
 }
