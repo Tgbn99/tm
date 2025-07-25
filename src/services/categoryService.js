@@ -1,5 +1,5 @@
-import logger from "../logger";
-import Category from "../models/categoryModel";
+import logger from "../logger.js";
+import Category from "../models/categoryModel.js";
 
 class CategoryService {
   async create(category) {
@@ -9,40 +9,42 @@ class CategoryService {
 
   async list(categoryID) {
     logger.info("CategoryService - list");
-    if(!categoryID) {
+    if (!categoryID) {
       logger.info("CategoryService - listAll");
       const categories = await Category.find().populate("subcategories");
-      if(categories.length === 0) {
-        throw new Error("NoCategoryFound")
+      if (categories.length === 0) {
+        throw new Error("NoCategoryFound");
       }
-      return categories
+      return categories;
     } else {
       logger.info("CategoryService - listOne");
-      const category = await Category.findOne({categoryID: categoryID}).populate("subcategories");
-      if(!category) {
-        throw new Error("CategoryNotFound")
+      const category = await Category.findOne({
+        categoryID: categoryID,
+      }).populate("subcategories");
+      if (!category) {
+        throw new Error("CategoryNotFound");
       }
-      return category
+      return category;
     }
   }
 
   async update(data, categoryID) {
     logger.info("CategoryService - update");
-    const category = await Category.findOne({categoryID: categoryID})
-    if(!category) {
-      throw new Error("CategoryNotFound")
+    const category = await Category.findOne({ categoryID: categoryID });
+    if (!category) {
+      throw new Error("CategoryNotFound");
     }
-    Object.assign(category, data)
+    Object.assign(category, data);
     return await category.save().populate("subcategories");
   }
 
   async delete(categoryID) {
     logger.info("CategoryService - delete");
-    const category = await Category.findOne({categoryID: categoryID})
-    if(!category) {
-      throw new Error("CategoryNotFound")
+    const category = await Category.findOne({ categoryID: categoryID });
+    if (!category) {
+      throw new Error("CategoryNotFound");
     }
-    await category.deleteOne()
+    await category.deleteOne();
   }
 }
 

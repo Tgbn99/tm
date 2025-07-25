@@ -1,7 +1,7 @@
-import ProjectInputDTO from "../DTOs/projectInputDTO";
-import ProjectOutputDTO from "../DTOs/projectOutputDTO";
+import ProjectInputDTO from "../DTOs/projectInputDTO.js";
+import ProjectOutputDTO from "../DTOs/projectOutputDTO.js";
 import ProjectService from "../services/projectService.js";
-import logger from "../logger";
+import logger from "../logger.js";
 import { MESSAGES } from "../utils/messages.js";
 
 class ProjectController {
