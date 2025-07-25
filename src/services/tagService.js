@@ -1,5 +1,5 @@
-import logger from "../logger";
-import Tag from "../models/tagModel";
+import logger from "../logger.js";
+import Tag from "../models/tagModel.js";
 
 class TagService {
   async create(tag) {

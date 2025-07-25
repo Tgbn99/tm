@@ -1,6 +1,6 @@
-import logger from "../logger";
+import logger from "../logger.js";
 import TagService from "../services/tagService.js";
-import TagInputDTO from "../DTOs/tagInputDTO";
+import TagInputDTO from "../DTOs/tagInputDTO.js";
 import TagOutputDTO from "../DTOs/tagOutputDTO.js";
 import { MESSAGES } from "../utils/messages.js";
 
