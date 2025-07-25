@@ -1,5 +1,5 @@
-import logger from "../logger";
-import Category from "../models/categoryModel";
+import logger from "../logger.js";
+import Category from "../models/categoryModel.js";
 
 class CategoryInputDTO {
   constructor(category) {
@@ -9,7 +9,7 @@ class CategoryInputDTO {
   }
 
   async toCategory() {
-    logger.info("toCategory")
+    logger.info("toCategory");
     return new Category({
       categoryID: this.categoryID,
       name: this.name,

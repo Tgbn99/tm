@@ -6,6 +6,8 @@ import { taskRoutes } from "./routes/taskRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import { categoryRoutes } from "./routes/categoryRoutes.js";
 import { subcategoryRoutes } from "./routes/subcategoryRoutes.js";
+import { projectRoutes } from "./routes/projectRoutes.js";
+import { tagRoutes } from "./routes/tagRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +26,7 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/tags", tagRoutes);
 
 app.use(errorHandler);
 

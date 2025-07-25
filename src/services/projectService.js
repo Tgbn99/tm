@@ -1,5 +1,5 @@
 import Project from "../models/projectModel.js";
-import logger from "../logger";
+import logger from "../logger.js";
 
 class ProjectService {
   async create(project) {
