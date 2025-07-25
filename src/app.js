@@ -21,8 +21,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/tasks", taskRoutes);
-app.use("/api/tasks", categoryRoutes);
-app.use("/api/tasks", subcategoryRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/subcategories", subcategoryRoutes);
+app.use("/api/projects", projectRoutes);
+
 app.use(errorHandler);
 
 mongoose

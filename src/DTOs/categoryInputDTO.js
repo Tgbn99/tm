@@ -6,7 +6,6 @@ class CategoryInputDTO {
     this.categoryID = category.categoryID;
     this.name = category.name;
     this.description = category.description;
-    this.subcategories = category.subcategories;
   }
 
   async toCategory() {
