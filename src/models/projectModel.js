@@ -16,12 +16,12 @@ const projectSchema = new Schema(
       type: String,
       maxlength: 100,
     },
-    tasks: [
+    /* tasks: [
       {
         type: Schema.Types.ObjectId,
         ref: "Task",
       },
-    ],
+    ], */
     tags: [
       {
         type: Schema.Types.ObjectId,
@@ -31,5 +31,14 @@ const projectSchema = new Schema(
   },
   { collection: "projects", timestamps: true }
 );
+
+projectSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "project"
+})
+
+projectSchema.set("toObject", {virtuals: true})
+projectSchema.set("toJSON", {virtuals: true})
 
 export default model("Project", projectSchema);
