@@ -1,4 +1,5 @@
 import logger from "../logger.js";
+import Tag from "../models/tagModel.js"
 
 class TagInputDTO {
   constructor(tag) {

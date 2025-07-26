@@ -2,9 +2,10 @@ import SubcategoryInputDTO from "../DTOs/subcategoryInputDTO.js";
 import SubcategoryOutputDTO from "../DTOs/subcategoryOutputDTO.js";
 import SubcategoryService from "../services/subcategoryService.js";
 import { MESSAGES } from "../utils/messages.js";
+import logger from "../logger.js";
 
 class SubcategoryController {
-  async createSubcategory(req, res) {
+  async createSubcategory(req, res, next) {
     logger.info("SubcategoryController - createSubcategory");
     try {
         const inputDTO = new SubcategoryInputDTO(req.body)
@@ -22,7 +23,7 @@ class SubcategoryController {
     }
   }
 
-  async getAllSubcategories(req, res) {
+  async getAllSubcategories(req, res, next) {
     logger.info("SubcategoryController - getAllSubcategories");
     try {
         const subcategories = await SubcategoryService.list()
@@ -38,7 +39,7 @@ class SubcategoryController {
     }
   }
 
-  async getSubcategory(req, res) {
+  async getSubcategory(req, res, next) {
     logger.info("SubcategoryController - getSubcategory");
     try {
         const subcategory = await SubcategoryService.list(req.params.subcategoryID)
@@ -54,7 +55,7 @@ class SubcategoryController {
     }
   }
 
-  async updateSubcategory(req, res) {
+  async updateSubcategory(req, res, next) {
     logger.info("SubcategoryController - updateSubcategory");
     try {
         const inputDTO = new SubcategoryInputDTO(req.body)
@@ -72,7 +73,7 @@ class SubcategoryController {
     }
   }
 
-  async deleteSubcategory(req, res) {
+  async deleteSubcategory(req, res, next) {
     logger.info("SubcategoryController - deleteSubcategory");
     try {
         await SubcategoryService.delete(req.params.subcategoryID)

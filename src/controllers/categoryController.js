@@ -5,7 +5,7 @@ import { MESSAGES } from "../utils/messages.js";
 import logger from "../logger.js";
 
 class CategoryController {
-  async createCategory(req, res) {
+  async createCategory(req, res, next) {
     logger.info("CategoryController - createCategory");
     try {
       const inputDTO = new CategoryInputDTO(req.body);
@@ -23,7 +23,7 @@ class CategoryController {
     }
   }
 
-  async getAllCategories(req, res) {
+  async getAllCategories(req, res, next) {
     logger.info("CategoryController - getAllCategories");
     try {
       const categories = await CategoryService.list();
@@ -41,7 +41,7 @@ class CategoryController {
     }
   }
 
-  async getCategory(req, res) {
+  async getCategory(req, res, next) {
     logger.info("CategoryController - getCategory");
     try {
       const category = await CategoryService.list(req.params.categoryID);
@@ -57,7 +57,7 @@ class CategoryController {
     }
   }
 
-  async updateCategory(req, res) {
+  async updateCategory(req, res, next) {
     logger.info("CategoryController - updateCategory");
     try {
       const inputDTO = new CategoryInputDTO(req.body);
@@ -78,7 +78,7 @@ class CategoryController {
     }
   }
 
-  async deleteCategory(req, res) {
+  async deleteCategory(req, res, next) {
     logger.info("CategoryController - deleteCategory");
     try {
       await CategoryService.delete(req.params.categoryID);

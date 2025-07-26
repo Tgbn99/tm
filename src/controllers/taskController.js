@@ -5,7 +5,7 @@ import logger from "../logger.js";
 import { MESSAGES } from "../utils/messages.js";
 
 class TaskController {
-  async createTask(req, res) {
+  async createTask(req, res, next) {
     logger.info("TaskController - createTask");
     try {
       const inputDTO = new TaskInputDTO(req.body);
@@ -23,7 +23,7 @@ class TaskController {
     }
   }
 
-  async getAllTasks(req, res) {
+  async getAllTasks(req, res, next) {
     logger.info("TaskController - getAllTasks");
     try {
       const tasks = await TaskService.list();
@@ -39,7 +39,7 @@ class TaskController {
     }
   }
 
-  async getTask(req, res) {
+  async getTask(req, res, next) {
     logger.info("TaskController - getTask");
     try {
       const task = await TaskService.list(req.params.taskID);
@@ -55,7 +55,7 @@ class TaskController {
     }
   }
 
-  async updateTask(req, res) {
+  async updateTask(req, res, next) {
     logger.info("TaskController - updateTask");
     try {
       const inputDTO = new TaskInputDTO(req.body);
@@ -73,7 +73,7 @@ class TaskController {
     }
   }
 
-  async deleteTask(req, res) {
+  async deleteTask(req, res, next) {
     logger.info("TaskController - deleteTask");
     try {
       await TaskService.delete(req.params.taskID)

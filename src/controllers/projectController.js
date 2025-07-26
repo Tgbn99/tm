@@ -5,7 +5,7 @@ import logger from "../logger.js";
 import { MESSAGES } from "../utils/messages.js";
 
 class ProjectController {
-  async createProject(req, res) {
+  async createProject(req, res, next) {
     logger.info("ProjectController - createProject");
     try {
       const inputDTO = new ProjectInputDTO(req.body);
@@ -23,7 +23,7 @@ class ProjectController {
     }
   }
 
-  async getAllProjects(req, res) {
+  async getAllProjects(req, res, next) {
     logger.info("ProjectController - getAllProjects");
     try {
       const projects = await ProjectService.list();
@@ -41,7 +41,7 @@ class ProjectController {
     }
   }
 
-  async getProject(req, res) {
+  async getProject(req, res, next) {
     logger.info("ProjectController - getProject");
     try {
       const project = await ProjectService.list(req.params.projectID);
@@ -57,19 +57,19 @@ class ProjectController {
     }
   }
 
-  async updateProject(req, res) {
+  async updateProject(req, res, next) {
     logger.info("ProjectController - updateProject");
     try {
       const inputDTO = new ProjectInputDTO(req.body);
       const projectModel = await inputDTO.toProject();
-      const savedProject = await ProjectService.create(
+      const savedProject = await ProjectService.update(
         projectModel,
         req.params.projectID
       );
       const outputDTO = new ProjectOutputDTO(savedProject);
 
       res.status(201).json({
-        message: MESSAGES.PROJECT_CREATED,
+        message: MESSAGES.PROJECT_UPDATED,
         data: outputDTO,
       });
     } catch (err) {
@@ -78,7 +78,7 @@ class ProjectController {
     }
   }
 
-  async deleteProject(req, res) {
+  async deleteProject(req, res, next) {
     logger.info("ProjectController - deleteProject");
     try {
       await ProjectService.delete(req.params.projectID);

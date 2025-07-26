@@ -4,15 +4,14 @@ import Task from "../models/taskModel.js";
 class TaskService {
   async create(task) {
     logger.info("TaskService - create");
-    return await task
-      .save()
-      .populate([
-        { path: "category" },
-        { path: "subcategory" },
-        { path: "project" },
-        { path: "user" },
-        { path: "tags" },
-      ]);
+    const saved = await task.save();
+    return await saved.populate([
+      { path: "category" },
+      { path: "subcategory" },
+      { path: "project" },
+      /* { path: "user" }, */
+      { path: "tags" },
+    ]);
   }
 
   async list(taskID) {
@@ -23,7 +22,7 @@ class TaskService {
         { path: "category" },
         { path: "subcategory" },
         { path: "project" },
-        { path: "user" },
+        /* { path: "user" }, */
         { path: "tags" },
       ]);
       if (tasks.length === 0) {
@@ -36,7 +35,7 @@ class TaskService {
         { path: "category" },
         { path: "subcategory" },
         { path: "project" },
-        { path: "user" },
+        /* { path: "user" }, */
         { path: "tags" },
       ]);
       if (!task) {
@@ -53,16 +52,17 @@ class TaskService {
     if (!task) {
       throw new Error("TaskNotFound");
     }
-    Object.assign(task, data);
-    return await task
-      .save()
-      .populate([
-        { path: "category" },
-        { path: "subcategory" },
-        { path: "project" },
-        { path: "user" },
-        { path: "tags" },
-      ]);
+    const plainData = data.toObject();
+    const { _id, ...safeData } = plainData;
+    Object.assign(task, safeData);
+    const saved = await task.save();
+    return await saved.populate([
+      { path: "category" },
+      { path: "subcategory" },
+      { path: "project" },
+      /* { path: "user" }, */
+      { path: "tags" },
+    ]);
   }
 
   async delete(taskID) {

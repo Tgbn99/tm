@@ -1,9 +1,11 @@
 import Subcategory from "../models/subcategoryModel.js";
+import logger from "../logger.js";
 
 class SubcategoryService {
   async create(subcategory) {
     logger.info("SubcategoryService - create");
-    return await subcategory.save().populate("category");
+    const saved = await subcategory.save()
+    return await saved.populate("category");
   }
 
   async list(subcategoryID) {
@@ -33,8 +35,11 @@ class SubcategoryService {
     if (!subcategory) {
       throw new Error("SubcategoryNotFound");
     }
-    Object.assign(subcategory, data);
-    return await subcategory.save().populate("category");
+    const plainData = data.toObject();
+    const { _id, ...safeData } = plainData;
+    Object.assign(subcategory, safeData);
+    const saved = await subcategory.save()
+    return await saved.populate("category");
   }
 
   async delete(subcategoryID) {
