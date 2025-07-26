@@ -28,11 +28,13 @@ class TagService {
 
   async update(data, tagID) {
     logger.info("TagService - update");
-    const tag = Tag.findOne({ tagID: tagID });
+    const tag = await Tag.findOne({ tagID: tagID });
     if (!tag) {
       throw new Error("TagNotFound");
     }
-    Object.assign(data, tag);
+    const plainData = data.toObject();
+    const { _id, ...safeData } = plainData;
+    Object.assign(tag, safeData);
     return await tag.save();
   }
 

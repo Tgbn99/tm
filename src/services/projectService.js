@@ -4,7 +4,8 @@ import logger from "../logger.js";
 class ProjectService {
   async create(project) {
     logger.info("ProjectService - create");
-    return await project.save().populate("tasks");
+    const saved = await project.save()
+    return await saved.populate("tasks");
   }
 
   async list(projectID) {
@@ -34,11 +35,14 @@ class ProjectService {
     if (!project) {
       throw new Error("ProjectNotFound");
     }
-    Object.assign(project, data);
-    return await project.save().populate("tasks");
+    const plainData = data.toObject();
+    const { _id, ...safeData } = plainData;
+    Object.assign(project, safeData);
+    const saved = await project.save()
+    return await saved.populate("tasks");
   }
 
-  async delete() {
+  async delete(projectID) {
     logger.info("ProjectService - delete");
     const project = await Project.findOne({ projectID: projectID });
     if (!project) {

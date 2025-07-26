@@ -9,7 +9,7 @@ import logger from "../logger.js";
 class TaskInputDTO {
   constructor(task) {
     this.taskID = task.taskID;
-    this.title = task.title;
+    this.name = task.name;
     this.description = task.description;
     this.category = task.category;
     this.subcategory = task.subcategory;
@@ -34,26 +34,14 @@ class TaskInputDTO {
     if (!taskSubcategory) {
       throw new Error("SubcategoryNotFound");
     }
-    const taskUser = await User.findOne({ email: this.user });
+    /* const taskUser = await User.findOne({ email: this.user });
     if (!taskUser) {
       throw new Error("UserNotFound");
-    }
+    } */
     const taskProject = await Project.findOne({ projectID: this.project });
     if (!taskProject) {
       throw new Error("ProjectNotFound");
     }
-
-    /* const missingTags = [];
-    for (let i = 0; i < this.tags.length; i++) {
-      const tagExists = await Tag.findOne({ tagID: this.tags[i] });
-      if (!tagExists) {
-        missingTags.add(this.tags[i]);
-      }
-    }
-    if (missingTags.length > 0) {
-      missingTags.forEach((tagID) => logger.error(tagID));
-      throw new Error("TagNotFound");
-    } */
 
     const tagLookups = await Promise.all(
       this.tags.map(async (tagID) => {
@@ -73,7 +61,7 @@ class TaskInputDTO {
 
     return new Task({
       taskID: this.taskID,
-      title: this.title,
+      name: this.name,
       description: this.description,
       category: taskCategory._id,
       subcategory: taskSubcategory._id,
@@ -81,7 +69,7 @@ class TaskInputDTO {
       status: this.status,
       priority: this.priority,
       completedAt: this.completedAt,
-      assignee: taskUser._id,
+      assignee: this.assignee/* taskUser._id */,
       project: taskProject._id,
       tags: tagLookups.map(({ tagDoc }) => tagDoc._id),
     });

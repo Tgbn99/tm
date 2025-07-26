@@ -4,7 +4,8 @@ import Category from "../models/categoryModel.js";
 class CategoryService {
   async create(category) {
     logger.info("CategoryService - create");
-    return await category.save().populate("subcategories");
+    const saved = await category.save();
+    return await saved.populate("subcategories");
   }
 
   async list(categoryID) {
@@ -34,8 +35,11 @@ class CategoryService {
     if (!category) {
       throw new Error("CategoryNotFound");
     }
-    Object.assign(category, data);
-    return await category.save().populate("subcategories");
+    const plainData = data.toObject();
+    const { _id, ...safeData } = plainData;
+    Object.assign(category, safeData);
+    const saved = await category.save();
+    return await saved.populate("subcategories");
   }
 
   async delete(categoryID) {

@@ -6,15 +6,24 @@ const projectSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      match: [
+        /^[0-9]{1}[A-Za-z]{1}$/,
+        "Project id must have 1 number and 1 letter",
+      ],
+      minlength: [2, "Project id must be exatcly 2 characters"],
+      maxlength: [2, "Project id must be exatcly 2 characters"],
+      lowercase: true,
     },
     name: {
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
     },
     description: {
       type: String,
       maxlength: 100,
+      lowercase: true,
     },
     /* tasks: [
       {

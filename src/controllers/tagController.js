@@ -5,7 +5,7 @@ import TagOutputDTO from "../DTOs/tagOutputDTO.js";
 import { MESSAGES } from "../utils/messages.js";
 
 class TagController {
-  async createTag(req, res) {
+  async createTag(req, res, next) {
     logger.info("TagController - createTag");
     try {
       const inputDTO = new TagInputDTO(req.body);
@@ -23,7 +23,7 @@ class TagController {
     }
   }
 
-  async getAllTags(req, res) {
+  async getAllTags(req, res, next) {
     logger.info("TagController - getAllTags");
     try {
       const tags = await TagService.list();
@@ -39,7 +39,7 @@ class TagController {
     }
   }
 
-  async getTag(req, res) {
+  async getTag(req, res, next) {
     logger.info("TagController - getTag");
     try {
       const tag = await TagService.list(req.params.tagID);
@@ -55,7 +55,7 @@ class TagController {
     }
   }
 
-  async updateTag(req, res) {
+  async updateTag(req, res, next) {
     logger.info("TagController - updateTag");
     try {
       const inputDTO = new TagInputDTO(req.body);
@@ -73,7 +73,7 @@ class TagController {
     }
   }
 
-  async deleteTag(req, res) {
+  async deleteTag(req, res, next) {
     logger.info("TagController - deleteTag");
     try {
       await TagService.delete(req.params.tagID);

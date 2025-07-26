@@ -1,7 +1,7 @@
 class TaskOutputDTO {
   constructor(task) {
     this.taskID = task.taskID;
-    this.title = task.title;
+    this.name = task.name;
     this.description = task.description;
     this.category = task.category;
     this.subcategory = task.subcategory;
