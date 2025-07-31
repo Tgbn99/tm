@@ -8,6 +8,7 @@ class TaskOutputDTO {
     this.dueDate = task.dueDate;
     this.status = task.status;
     this.priority = task.priority;
+    this.startedAt = task.startedAt;
     this.completedAt = task.completedAt;
     this.assignee = task.assignee;
     this.project = task.project;

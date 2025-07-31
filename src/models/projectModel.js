@@ -25,6 +25,18 @@ const projectSchema = new Schema(
       maxlength: 100,
       lowercase: true,
     },
+    dueDate: {
+      type: Date,
+      lowercase: true,
+    },
+    startedAt: {
+      type: Date,
+      lowercase: true,
+    },
+    completedAt: {
+      type: Date,
+      lowercase: true,
+    },
     /* tasks: [
       {
         type: Schema.Types.ObjectId,
