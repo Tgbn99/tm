@@ -5,19 +5,31 @@ import Project from "../models/projectModel.js";
 import Tag from "../models/tagModel.js";
 import User from "../models/userModel.js";
 import logger from "../logger.js";
+import projectModel from "../models/projectModel.js";
 
 class TaskInputDTO {
   constructor(task) {
+    if (
+      !task.taskID ||
+      !task.name ||
+      !task.description ||
+      !task.category ||
+      !task.subcategory
+    ) {
+      throw new Error("MissingFields");
+    }
     this.taskID = task.taskID;
     this.name = task.name;
     this.description = task.description;
     this.category = task.category;
     this.subcategory = task.subcategory;
-    this.dueDate = new Date(task.dueDate);
+    this.dueDate = task.dueDate ? new Date(task.dueDate) : undefined;
     this.status = task.status;
     this.priority = task.priority;
-    this.startedAt = new Date(task.startedAt);
-    this.completedAt = new Date(task.completedAt);
+    this.startedAt = task.startedAt ? new Date(task.startedAt) : undefined;
+    this.completedAt = task.completedAt
+      ? new Date(task.completedAt)
+      : undefined;
     this.assignee = task.assignee;
     this.project = task.project;
     this.tags = task.tags;
@@ -40,28 +52,34 @@ class TaskInputDTO {
     if (!taskUser) {
       throw new Error("UserNotFound");
     } */
-    const taskProject = await Project.findOne({ projectID: this.project });
-    if (!taskProject) {
+
+    let tagLookups = [];
+
+    if (Array.isArray(this.tags) && this.tags.length > 0) {
+      tagLookups = await Promise.all(
+        this.tags.map(async (tagID) => {
+          const tagDoc = await Tag.findOne({ tagID });
+          return { tagID, tagDoc };
+        })
+      );
+
+      const missingTags = tagLookups
+        .filter(({ tagDoc }) => !tagDoc)
+        .map(({ tagID }) => tagID);
+
+      if (missingTags.length > 0) {
+        missingTags.forEach((tagID) => logger.error(`Missing tag: ${tagID}`));
+        throw new Error("TagNotFound");
+      }
+    }
+
+    let taskProject = await Project.findOne({ projectID: this.project });
+    if (this.project && !taskProject) {
       throw new Error("ProjectNotFound");
     }
 
-    const tagLookups = await Promise.all(
-      this.tags.map(async (tagID) => {
-        const tagDoc = await Tag.findOne({ tagID: tagID });
-        return { tagID, tagDoc };
-      })
-    );
-
-    const missingTags = tagLookups
-      .filter(({ tagDoc }) => !tagDoc)
-      .map(({ tagID }) => tagID);
-
-    if (missingTags.length > 0) {
-      missingTags.forEach((tagID) => logger.error(`Missing tag: ${tagID}`));
-      throw new Error("TagNotFound");
-    }
-
-    const isValidDate = (date) => date instanceof Date && !NaN(date.getTime())
+    const isValidDate = (date) =>
+      date instanceof Date && !isNaN(date.getTime());
 
     if (this.dueDate && !isValidDate(this.dueDate)) {
       throw new Error("InvalidDateFormat");
@@ -96,6 +114,7 @@ class TaskInputDTO {
       dueDate: this.dueDate,
       status: this.status,
       priority: this.priority,
+      startedAt: this.startedAt,
       completedAt: this.completedAt,
       assignee: this.assignee /* taskUser._id */,
       project: taskProject._id,
