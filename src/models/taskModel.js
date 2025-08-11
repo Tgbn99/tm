@@ -23,6 +23,7 @@ const taskSchema = new Schema(
       type: String,
       maxlength: 100,
       lowercase: true,
+      required: true
     },
     category: {
       type: Schema.Types.ObjectId,

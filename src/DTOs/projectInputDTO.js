@@ -6,15 +6,15 @@ class ProjectInputDTO {
     this.projectID = project.projectID;
     this.name = project.name;
     this.description = project.description;
-    this.dueDate = new Date(project.dueDate);
-    this.startedAt = new Date(project.startedAt);
-    this.completedAt = new Date(project.completedAt);
+    this.dueDate = project.dueDate ? new Date(project.dueDate) : undefined;
+    this.startedAt = project.startedAt ? new Date(project.startedAt) : undefined;
+    this.completedAt = project.completedAt ? new Date(project.completedAt) : undefined;
   }
 
   async toProject() {
     logger.info("toProject");
 
-    const isValidDate = (date) => date instanceof Date && !NaN(date.getTime());
+    const isValidDate = (date) => date instanceof Date && !isNaN(date.getTime());
 
     if (this.dueDate && !isValidDate(this.dueDate)) {
       throw new Error("InvalidDateFormat");

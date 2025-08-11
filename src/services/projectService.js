@@ -35,7 +35,8 @@ class ProjectService {
     if (!project) {
       throw new Error("ProjectNotFound");
     }
-    const plainData = data.toObject();
+
+    const plainData = data.toObject()
     const { _id, ...safeData } = plainData;
     Object.assign(project, safeData);
     const saved = await project.save()

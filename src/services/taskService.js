@@ -1,10 +1,23 @@
+import projectController from "../controllers/projectController.js";
+import ProjectInputDTO from "../DTOs/projectInputDTO.js";
 import logger from "../logger.js";
+import Project from "../models/projectModel.js";
 import Task from "../models/taskModel.js";
-
+import ProjectService from "./projectService.js";
 class TaskService {
   async create(task) {
     logger.info("TaskService - create");
+
     const saved = await task.save();
+    if (task.project) {
+      const taskProject = await Project.findOne({ _id: task.project });
+      if (!taskProject.startedAt && task.startedAt) {
+        taskProject.startedAt = task.startedAt;
+        const inputDTO = new ProjectInputDTO(taskProject);
+        const projectModel = await inputDTO.toProject();
+        await ProjectService.update(projectModel, taskProject.projectID);
+      }
+    }
     return await saved.populate([
       { path: "category" },
       { path: "subcategory" },
@@ -56,6 +69,15 @@ class TaskService {
     const { _id, ...safeData } = plainData;
     Object.assign(task, safeData);
     const saved = await task.save();
+    if (task.project) {
+      const taskProject = await Project.findOne({ _id: task.project });
+      if (!taskProject.startedAt && task.startedAt) {
+        taskProject.startedAt = task.startedAt;
+        const inputDTO = new ProjectInputDTO(taskProject);
+        const projectModel = await inputDTO.toProject();
+        await ProjectService.update(projectModel, taskProject.projectID);
+      }
+    }
     return await saved.populate([
       { path: "category" },
       { path: "subcategory" },
